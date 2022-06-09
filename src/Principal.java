@@ -7,14 +7,22 @@ import java.io.IOException;
 
 public class Principal {
     public static void main (String []args) throws IOException {
-        File file = new File("src\\testee.jpg");
+        File file = new File("src\\teste.jpg");
         BufferedImage image = ImageIO.read(file);
+
+        double[] horizontal = {-1, -2, -1, 0, 0, 0, 1, 2, 1};
+        double[] vertical = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
+        double[] linhasOeste = {1, 1, -1, 1, -2, -1, 1, 1, -1};
+        double[] laplaciano = {0, -1, 0, -1, 4, -1, 0, -1, 0};
+
 
         Filtragem f = new Filtragem();
         double[][][] imageYiq = f.rgb2YIQ(image);
-        BufferedImage imageOutput = f.yiq2RGB(f.negativeY(imageYiq));
 
-
+        BufferedImage imageOutput = f.convolution(image, laplaciano);
+//        averageNeighborhoodSize
+//        medianNeighborhoodSize
+//        convolution
         JLabel mylabel = new JLabel(new ImageIcon(imageOutput));
         JPanel mypanel = new JPanel();
         mypanel.add(mylabel);
@@ -23,8 +31,4 @@ public class Principal {
         myframe.add(mypanel);
         myframe.setVisible(true);
     }
-
-
-
-
 }
